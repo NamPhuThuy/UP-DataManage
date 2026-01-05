@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace NamPhuThuy.Data
+namespace NamPhuThuy.DataManage
 {
     public static class ListExtension
     {

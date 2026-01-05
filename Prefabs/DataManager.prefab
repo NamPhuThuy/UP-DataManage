@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3697546784348136267}
   - component: {fileID: 1876964190933826134}
-  - component: {fileID: 4997814494027620530}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -46,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14862124ddedc445972a184b0e2954a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boosterData: {fileID: 11400000, guid: daa0c1834c1c9344a985a099d7a9940c, type: 2}
   foodData: {fileID: 11400000, guid: 1c3b39417340b7a4b85a38633f56c55b, type: 2}
   conceptData: {fileID: 11400000, guid: 9c98df0161479b4458e1f1c9b6fedf6c, type: 2}
   eventRewardData: {fileID: 11400000, guid: 236599fc25a879746a4f4e9bb40836db, type: 2}
@@ -55,13 +53,14 @@ MonoBehaviour:
   levelDataLoader: {fileID: 226066221087009291}
   defaultFont: {fileID: 11400000, guid: 3a3996006de193546b3a25b9393d4c5f, type: 2}
   cachedPlayerData:
-    levelId: 0
     coin: 0
     remainTimeForNextHeart: 0
     lastSessionTimestamp: 0
     health: 0
-    isRemoveAds: 0
     boosters: []
+  cachedPProgressData:
+    levelId: 0
+    isAdsRemoved: 0
   cachedPlayerSettingsData:
     musicVolume: 0
     sfxVolume: 0
@@ -69,22 +68,25 @@ MonoBehaviour:
     sfxEnabled: 0
     vibrationEnabled: 0
     notifyEnabled: 0
+  cachedPInventoryData:
+    resources:
+    - resourceType: 1
+      boosterType: 0
+      amount: 0
+    - resourceType: 3
+      boosterType: 0
+      amount: 5
+    boosters:
+    - boosterType: 1
+      amount: 0
+    - boosterType: 2
+      amount: 0
+    - boosterType: 3
+      amount: 0
   isUseRemoteConfig: 0
   iapData: {fileID: 11400000, guid: 804748045dba7bb4195098c4b49145c4, type: 2}
   resourceData: {fileID: 11400000, guid: 71c2cedce318abd43ac2a8f21d14c10b, type: 2}
---- !u!114 &4997814494027620530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7550815718469515929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 384f4a5ac76277345b2b928005b7420b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyDuplicates: 1
+  boosterData: {fileID: 11400000, guid: daa0c1834c1c9344a985a099d7a9940c, type: 2}
 --- !u!1 &9200000017301800076
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,6 +131,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6d0a781084dc341b219b33f2e16b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultLevelData: {fileID: 11400000, guid: 06de3165dd342974f9effa3fefa1b3bb, type: 2}
   jsonFileOverride: {fileID: 4900000, guid: 78878d22bda1248479c85b5b663d1135, type: 3}
   remoteConfigKey: level_data

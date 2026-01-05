@@ -8,21 +8,9 @@ using NamPhuThuy.Common;
 using UnityEditor;
 #endif
 
-namespace NamPhuThuy.Data
+namespace NamPhuThuy.DataManage
 {
-    [Serializable]
-    public class BoosterRecord
-    {
-        public BoosterType boosterType;
-        public int unlockLevel;
-        public int stackPerBuy;
-        public List<ResourceAmount> price;
-        
-        public string boosterName;
-        public string offerDescription;
-        public Sprite gameplayImage;
-        public Sprite inventoryImage;
-    }
+    
     
     [CreateAssetMenu(fileName = "BoosterData", menuName = "Game/BoosterData")]
     public class BoosterData : ScriptableObject
@@ -46,13 +34,13 @@ namespace NamPhuThuy.Data
             {
                 if (booster == null) continue;
         
-                if (booster.boosterType == BoosterType.NONE) continue;
+                if (booster.BoosterType == BoosterType.NONE) continue;
 
-                if (!typesSeen.Add(booster.boosterType))
+                if (!typesSeen.Add(booster.BoosterType))
                 {
-                    if (!duplicates.Contains(booster.boosterType))
+                    if (!duplicates.Contains(booster.BoosterType))
                     {
-                        duplicates.Add(booster.boosterType);
+                        duplicates.Add(booster.BoosterType);
                     }
                 }
             }
@@ -79,32 +67,58 @@ namespace NamPhuThuy.Data
             foreach (var booster in data)
             {
                 if (booster == null) continue;
-                _dataDict[booster.boosterType] = booster; // last one wins if duplicates
+                _dataDict[booster.BoosterType] = booster; // last one wins if duplicates
             }
         }
         
         public Sprite GetGamePlaySprite(BoosterType type)
         {
-            var data = GetBoosterData(type);
+            var data = GetBoosterRecord(type);
             if (data == null) return null;
             return data.gameplayImage;  
-        }
-
-        public List<ResourceAmount> GetPrice(BoosterType type)
-        {
-            var boosterRecord = GetBoosterData(type);
-            return boosterRecord?.price;
         }
 
         /// <summary>
         /// Finds booster info by its type.
         /// Returns null if not found.
         /// </summary>
-        public BoosterRecord GetBoosterData(BoosterType type)
+        public BoosterRecord GetBoosterRecord(BoosterType type)
         {
             BuildIndex();
             return _dataDict.TryGetValue(type, out var data) ? data : null;
         }
+    }
+    
+    [Serializable]
+    public class BoosterAmount
+    {
+        public BoosterType boosterType;
+        public int amount = 0;
+
+        public BoosterAmount(BoosterType boosterType = BoosterType.NONE, int amount = 0)
+        {
+            this.boosterType = boosterType;
+            this.amount = amount;
+        }
+    }
+    
+    [Serializable]
+    public class BoosterRecord
+    {
+        [SerializeField] private BoosterType boosterType;
+        [SerializeField] private int unlockLevel;
+        [SerializeField] private int stackPerBuy;
+        [SerializeField] private List<ResourceAmount> price;
+        
+        public string boosterName;
+        public string offerDescription;
+        public Sprite gameplayImage;
+        public Sprite inventoryImage;
+
+        public BoosterType BoosterType => boosterType;
+        public int UnlockLevel => unlockLevel;
+        public int StackPerBuy => stackPerBuy;
+        public List<ResourceAmount> Price => price;
     }
     
     public enum BoosterType

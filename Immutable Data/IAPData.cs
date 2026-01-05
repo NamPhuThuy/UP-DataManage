@@ -1,13 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
-using NamPhuThuy.Common;
 using UnityEngine;
 using UnityEngine.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace NamPhuThuy.Data
+namespace NamPhuThuy.DataManage
 {
     [CreateAssetMenu(fileName = "IAPData", menuName = "Game/IAPData", order = 1)]
     public class IAPData : ScriptableObject
@@ -41,13 +39,13 @@ namespace NamPhuThuy.Data
             {
                 if (r == null)
                 {
-                    DebugLogger.LogError(message:$"Record is null", context:this);
+                    Debug.Log(message:$"IAPData.EnsureDictInit: null record found, skipping");
                     continue;
                 }
                 
                 if (string.IsNullOrEmpty(r.BundleId))
                 {
-                    DebugLogger.LogError(message:$"Bundle is null", context:this);
+                    Debug.Log(message:$"IAPData.EnsureDictInit: bundleId is null, skipping");
                     continue;
                 }
                 _dictRecordByID[r.BundleId] = r; // last one wins if duplicates

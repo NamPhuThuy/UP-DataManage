@@ -5,42 +5,15 @@ using MoreMountains.Tools;
 using NamPhuThuy.Common;
 using UnityEngine;
 
-namespace NamPhuThuy.Data
+namespace NamPhuThuy.DataManage
 {
 
     [Serializable]
     public partial class PlayerData
     {
-        [SerializeField] private int levelId;
-        public int LevelId
-        {
-            get => levelId;
-            set
-            {
-                levelId = value;
-                levelId = Math.Max(0, value);
-                DataManager.Ins.MarkDirty();
-            }
-            
-        }
-
-        public int coin;
-        public int Coin
-        {
-            get => coin;
-            set
-            {
-                coin = value;
-                coin = Math.Max(0, value);
-
-                DataManager.Ins.MarkDirty();
-                MMEventManager.TriggerEvent(new EResourceUpdated());
-            }
-        }
-        
         public float remainTimeForNextHeart;
         public long lastSessionTimestamp;
-        public int health;
+        [SerializeField] private int health;
         public int Health
         {
             get => health;
@@ -50,20 +23,21 @@ namespace NamPhuThuy.Data
                 health = Mathf.Clamp(health, 0, DataConst.MAX_HEALTH);
 
                 DataManager.Ins.MarkDirty();
-                MMEventManager.TriggerEvent(new EResourceUpdated());
+                MMEventManager.TriggerEvent(new EResourceUpdated()
+                {
+                    ResourceType =  ResourceType.HEART
+                });
             }
         }
-
-        public bool isRemoveAds;
-        
         public List<PlayerBoosterData> boosters = new List<PlayerBoosterData>();
 
-        public PlayerData(int levelId = 0, int coin = 0)
+        public PlayerData()
         {
-            this.LevelId = levelId;
-            this.Coin = coin;
-            this.isRemoveAds = false;
-            remainTimeForNextHeart = DataConst.HEALTH_REGEN_TIME;
+            // Some of these lines create stack-overflow error
+            // this.LevelId = levelId;
+            // this.Coin = coin; 
+            /*health = DataConst.MAX_HEALTH;
+            remainTimeForNextHeart = DataConst.HEALTH_REGEN_TIME;*/
         }
         
         // For reflection serialization
@@ -79,10 +53,7 @@ namespace NamPhuThuy.Data
             var sb = new StringBuilder();
 
             sb.AppendLine("=== PlayerData ===");
-            sb.AppendLine($"CurrentLevelId: {LevelId}");
-            sb.AppendLine($"Coin: {Coin}");
             sb.AppendLine($"Health: {Health}");
-            sb.AppendLine($"IsRemoveAds: {isRemoveAds}");
 
             sb.AppendLine("Boosters:");
             if (boosters == null || boosters.Count == 0)
@@ -109,23 +80,19 @@ namespace NamPhuThuy.Data
             switch (resourceType)
             {
                 case ResourceType.COIN:
-                    return TrySpendCoins(amount);
+                    return DataManager.Ins.PInventoryData.TrySpendCoins(amount);
                 case ResourceType.BOOSTER:
                     int currentNum = GetBoosterNum(boosterType);
                     if (currentNum < amount) return false;
                     AddBooster(boosterType, -amount);
                     return true;
-                case ResourceType.NO_ADS:
-                    // No spending for No Ads
-                    return false;
                 case ResourceType.HEART:
                     if (health < amount) return false;
                     Health -= amount;
                     return true;    
-                default:
-                    Debug.LogWarning($"PlayerData.TrySpendResource() - Unsupported ResourceType: {resourceType}");
-                    return false;
             }
+
+            return false;
         }
 
         public void AddResource(ResourceType type, int amount, BoosterType boosterType = BoosterType.NONE)
@@ -134,13 +101,13 @@ namespace NamPhuThuy.Data
             switch (type)
             {
                 case ResourceType.COIN:
-                    AddCoins(amount);
+                    DataManager.Ins.PInventoryData.AddCoins(amount);
                     break;
                 case ResourceType.BOOSTER:
                     AddBooster(boosterType, amount);
                     break;
                 case ResourceType.NO_ADS:
-                    ActiveNoAds();
+                    DataManager.Ins.PProgressData.RemoveAds();
                     break;
                 case ResourceType.HEART:
                     Health += amount;
@@ -187,29 +154,8 @@ namespace NamPhuThuy.Data
         #endregion
 
         #region Coin Helpers
-        public void AddCoins(int amount)
-        {
-            if (amount <= 0) return;
-            Coin = coin + amount;
-        }
-
-        public bool TrySpendCoins(int amount)
-        {
-            if (amount <= 0) return true;
-            if (coin < amount) return false;
-            SpendCoins(amount);
-            return true;
-        }
         
-        public void SpendCoins(int amount)
-        {
-            Coin = coin - amount;
-        }
 
-        public void ClearAllCoins()
-        {
-            Coin = 0;
-        }
         #endregion
         
         #region Booster Helpers
@@ -252,13 +198,6 @@ namespace NamPhuThuy.Data
             DataManager.Ins.MarkDirty();
         }
 
-        public void ClearBoosters()
-        {
-            SetBoosterNum(BoosterType.TIMER, 0);
-            SetBoosterNum(BoosterType.SHUFFLE, 0);
-            SetBoosterNum(BoosterType.MAGIC_PICK, 0);
-        }
-        
         [Serializable]
         public class PlayerBoosterData
         {
@@ -267,14 +206,7 @@ namespace NamPhuThuy.Data
         }
 
         #endregion
-        #region NoAds Helpers
-
-        public void ActiveNoAds()
-        {
-            isRemoveAds = true;
-        }
-
-        #endregion
+        
         /// <summary>
         /// Apply a list of rewards to the player. Returns true if anything was granted.
         /// </summary>
@@ -295,9 +227,8 @@ namespace NamPhuThuy.Data
                     case ResourceType.COIN:
                         if (amount <= 0) break;
                             
-                        AddCoins(amount);
+                        DataManager.Ins.PInventoryData.AddCoins(amount);
                         anyGranted = true;
-                            
                         break;
 
                     case ResourceType.BOOSTER:
@@ -309,21 +240,13 @@ namespace NamPhuThuy.Data
 
                     case ResourceType.NO_ADS:
 
-                        DataManager.Ins.PlayerData.ActiveNoAds();
+                        DataManager.Ins.PProgressData.RemoveAds();
+                        anyGranted = true;
                         break;
                 }
             }
 
             if (anyGranted) DataManager.Ins.MarkDirty();
-            if (anyGranted)
-            {
-                Debug.Log($"PlayerData.TryApplyRewards() - rewards are applied");
-            }
-            else
-            {
-                Debug.Log($"PlayerData.TryApplyRewards() - rewards haven't applied");
-            }
-            
             return anyGranted;
         }
 
@@ -336,7 +259,35 @@ namespace NamPhuThuy.Data
             {
                 return false;
             }
-            return TryApplyRewards(new List<ResourceAmount> { item }, amountMultiplier);
+            
+            bool anyGranted = false;
+            
+            int amount = Math.Max(0, item.amount * Math.Max(1, amountMultiplier));
+            switch (item.resourceType)
+            {
+                case ResourceType.COIN:
+                    if (amount <= 0) break;
+                            
+                    DataManager.Ins.PInventoryData.AddCoins(amount);
+                    anyGranted = true;
+                    break;
+
+                case ResourceType.BOOSTER:
+                    if (amount <= 0) break;
+                        
+                    SetBoosterNum(item.boosterType, GetBoosterNum(item.boosterType) + amount);
+                    anyGranted = true;
+                    break;
+
+                case ResourceType.NO_ADS:
+
+                    DataManager.Ins.PProgressData.RemoveAds();
+                    anyGranted = true;
+                    break;
+            }
+            
+            if (anyGranted) DataManager.Ins.MarkDirty();
+            return anyGranted;
         }
         
        

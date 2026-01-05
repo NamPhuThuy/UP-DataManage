@@ -1,6 +1,6 @@
 using System;
 
-namespace NamPhuThuy.Data
+namespace NamPhuThuy.DataManage
 {
     
     [Serializable]

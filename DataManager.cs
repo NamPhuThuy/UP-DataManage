@@ -2,14 +2,13 @@ using System;
 using System.Collections;
 using System.IO;
 using MoreMountains.Tools;
-using NamPhuThuy.Common;
 using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace NamPhuThuy.Data
+namespace NamPhuThuy.DataManage
 {
     /*
 ScriptableObjects for:
@@ -25,38 +24,93 @@ JSON for:
 - Anything that needs to change after build
 */
 
-    public partial class DataManager : Singleton<DataManager>
+    public partial class DataManager : MonoBehaviour
     {
         #region Private Fields
 
         private Coroutine _saveDebounce;
+        
+        private static DataManager _instance;
+        private static readonly object _lock = new object();
+        private static bool _isQuitting = false;
+        
+        public static DataManager Ins
+        {
+            get
+            {
+                if (_isQuitting)
+                {
+                    Debug.LogWarning($"[Singleton] Instance of {typeof(DataManager)} is already destroyed. Returning null.");
+                    return null;
+                }
+                
+                /*lock (_lock)
+                {*/
+                if (_instance == null)
+                {
+                    // Try to find existing instance in scene
+                    _instance = FindFirstObjectByType<DataManager>();
+
+                    if (_instance == null)
+                    {
+                        // Create new GameObject with the singleton component
+                        GameObject singletonObj = new GameObject($"{typeof(DataManager).Name} (Singleton)");
+                        _instance = singletonObj.AddComponent<DataManager>();
+                        
+                        Debug.Log($"[Singleton] Created new instance of {typeof(DataManager)}");
+                    }
+                }
+                //}
+
+                return _instance;
+            }
+        }
 
         #endregion
         
         #region MonoBehaviour Callbacks
 
-        protected override void Awake()
+        protected void Awake()
         {
-            // DebugLogger.Log();
-            base.Awake();
+            if (_instance == null)
+            {
+                _instance = this as DataManager;
+                DontDestroyOnLoad(gameObject);
+                OnInitialize();
+            }
+            else if (_instance != this)
+            {
+                Debug.LogWarning($"[Singleton] Duplicate instance of {typeof(DataManager)} detected. Destroying.");
+                Destroy(gameObject);
+            }
         }
 
-        public override void OnDestroy()
+        public void OnDestroy()
         {
-            DebugLogger.Log();
-            base.OnDestroy();
+            Debug.Log(message:$"DataManager.OnDestroy()");
+            _instance = null;
+            OnExtinction();
+            StopAllCoroutines();
         }
+        
+        public static bool Exists => _instance != null;
+        
+        protected virtual void OnInitialize()
+        {
+            // Override in derived classes for custom initialization
+        }
+        public virtual void OnExtinction() { }
 
-        private IEnumerator Start()
+        private void Start()
         {
             // DebugLogger.Log();
-            yield return null;
+            // yield return null;
             
-            _playerDataPath = $"{Application.persistentDataPath}/player.{DataConst.DATA_FILES_EXTENSION}";
-            _settingsDataPath = $"{Application.persistentDataPath}/settings.{DataConst.DATA_FILES_EXTENSION}";
+            _playerDataPath = $"{Application.persistentDataPath}/player.{DataConst.FILES_EXTENSION}";
+            _settingsDataPath = $"{Application.persistentDataPath}/settings.{DataConst.FILES_EXTENSION}";
 
-            yield return StartCoroutine(LoadData());
-
+            // yield return StartCoroutine(LoadData());
+            LoadData();
             /*if (isUseRemoteConfig)
             {
                 yield return StartCoroutine(levelDataLoader.LoadDataFromJson());
@@ -82,17 +136,17 @@ JSON for:
 
         private void OnApplicationQuit()
         {
+            _isQuitting = true;
             SaveData();
         }
 
         #endregion
 
-        #region Private Methods
+        #region Save Methods
 
         public void SavePlayerData()
         {
-            DebugLogger.Log();
-            _playerDataPath = $"{Application.persistentDataPath}/player.{DataConst.DATA_FILES_EXTENSION}";
+            _playerDataPath = $"{Application.persistentDataPath}/player.{DataConst.FILES_EXTENSION}";
 
             //example: origin = "{"name":"NamTrinh","level":12,"currentExpPoint":31.0}"
             string data = JsonUtility.ToJson(cachedPlayerData);
@@ -106,16 +160,38 @@ JSON for:
 
         public void SaveSettingsData()
         {
-            _settingsDataPath = $"{Application.persistentDataPath}/settings.{DataConst.DATA_FILES_EXTENSION}";
+            _settingsDataPath = $"{Application.persistentDataPath}/settings.{DataConst.FILES_EXTENSION}";
             string origin = JsonUtility.ToJson(cachedPlayerSettingsData);
-            string encrypted = EncryptHelper.XOROperator(origin, DataConst.DATA_ENCRYPT_KEY);
-            File.WriteAllText(_settingsDataPath, encrypted);
+            // origin = EncryptHelper.XOROperator(origin, DataConst.DATA_ENCRYPT_KEY);
+            File.WriteAllText(_settingsDataPath, origin);
+        }
+        
+        public void SaveProgressData()
+        {
+            _progressDataPath = $"{Application.persistentDataPath}/progress.{DataConst.FILES_EXTENSION}";
+            string origin = JsonUtility.ToJson(cachedPProgressData);
+            // origin = EncryptHelper.XOROperator(origin, DataConst.DATA_ENCRYPT_KEY);
+            File.WriteAllText(_progressDataPath, origin);
+        }
+        
+        public void SaveInventoryData()
+        {
+            _inventoryDataPath = $"{Application.persistentDataPath}/resource.{DataConst.FILES_EXTENSION}";
+            // PInventoryData.SyncDictToListForSave();
+            
+            string origin = JsonUtility.ToJson(cachedPInventoryData);
+            // origin = EncryptHelper.XOROperator(origin, DataConst.DATA_ENCRYPT_KEY);
+            File.WriteAllText(_inventoryDataPath, origin);
         }
 
-        private IEnumerator LoadPlayerData()
+        #endregion
+
+        #region  Load Methods
+
+        private void LoadPlayerData()
         {
             // DebugLogger.Log();
-            _playerDataPath = $"{Application.persistentDataPath}/player.{DataConst.DATA_FILES_EXTENSION}";
+            _playerDataPath = $"{Application.persistentDataPath}/player.{DataConst.FILES_EXTENSION}";
             if (File.Exists(_playerDataPath))
             {
                 try
@@ -136,26 +212,27 @@ JSON for:
                 }
                 catch (Exception e)
                 {
-                    DebugLogger.Log(message: $"Error: {e.Message}");
+                    Debug.LogError(message: $"Error: {e.Message}");
                     ResetPlayerData();
                 }
             }
             else
                 ResetPlayerData();
 
-            yield return null;
+            // yield return null;
         }
 
-        private IEnumerator LoadSettingsData()
+        private void LoadSettingsData()
         {
-            _settingsDataPath = $"{Application.persistentDataPath}/settings.{DataConst.DATA_FILES_EXTENSION}";
+            _settingsDataPath = $"{Application.persistentDataPath}/settings.{DataConst.FILES_EXTENSION}";
             if (File.Exists(_settingsDataPath))
             {
                 try
                 {
                     string data = File.ReadAllText(_settingsDataPath);
-                    string decrypted = EncryptHelper.XOROperator(data, DataConst.DATA_ENCRYPT_KEY);
-                    cachedPlayerSettingsData = JsonUtility.FromJson<PlayerSettingsData>(decrypted);
+                    // data = EncryptHelper.XOROperator(data, DataConst.DATA_ENCRYPT_KEY);
+                    cachedPlayerSettingsData = JsonUtility.FromJson<PlayerSettingsData>(data);
+                    
                 }
                 catch (Exception e)
                 {
@@ -166,16 +243,69 @@ JSON for:
             else
                 ResetSettingsData();
 
-            yield return null;
+            // yield return null;
         }
+        
+        private void LoadProgressData()
+        {
+            Debug.Log(message: $"DataManager.LoadProgressData()");
+            _progressDataPath = $"{Application.persistentDataPath}/progress.{DataConst.FILES_EXTENSION}";
+            if (File.Exists(_progressDataPath))
+            {
+                Debug.Log(message:$"DataManager.LoadProgressData() - {_progressDataPath} exist, load data");
+                try
+                {
+                    string data = File.ReadAllText(_progressDataPath);
+                    // data = EncryptHelper.XOROperator(data, DataConst.DATA_ENCRYPT_KEY);
+                    cachedPProgressData = JsonUtility.FromJson<PProgressData>(data);
+                    _isProgressDataLoaded = true;
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(message:$"DataManager.LoadProgressData() - Exception: {e.Message}, reset progress data");
+                    ResetProgressData();
+                }
+            }
+            else
+            {
+                Debug.Log(message: $"DataManager.LoadProgressData() - {_progressDataPath} not exist, reset progress data");
+                ResetProgressData();
+            }
 
+            // yield return null;
+        }
+        
+        private void LoadInventoryData()
+        {
+            _inventoryDataPath = $"{Application.persistentDataPath}/resource.{DataConst.FILES_EXTENSION}";
+            if (File.Exists(_inventoryDataPath))
+            {
+                try
+                {
+                    string data = File.ReadAllText(_inventoryDataPath);
+                    // data = EncryptHelper.XOROperator(data, DataConst.DATA_ENCRYPT_KEY);
+                    cachedPInventoryData = JsonUtility.FromJson<PInventoryData>(data);
+                }
+                catch (Exception e)
+                {
+                    // Debug.Log(e.Message);
+                    ResetInventoryData();
+                }
+            }
+            else
+                ResetInventoryData();
+
+            // yield return null;
+        }
+        
+
+        #endregion
+
+        #region Reset Methods
+        
         public void ResetPlayerData()
         {
-            DebugLogger.Log();
-            cachedPlayerData = new PlayerData()
-            {
-                health = DataConst.MAX_HEALTH
-            };
+            cachedPlayerData = new PlayerData();
             SavePlayerData();
         }
 
@@ -183,6 +313,19 @@ JSON for:
         {
             cachedPlayerSettingsData = new PlayerSettingsData();
             SaveSettingsData();
+        }
+        
+        public void ResetProgressData()
+        {
+            Debug.Log(message:$"DataManager.ResetProgressData()");
+            cachedPProgressData = new PProgressData();
+            SaveProgressData();
+        }
+        
+        public void ResetInventoryData()
+        {
+            cachedPInventoryData = new PInventoryData();
+            SaveInventoryData();
         }
 
         #endregion
@@ -197,28 +340,40 @@ JSON for:
 
         private IEnumerator SaveAfterDelay(float delay)
         {
-            yield return YieldHelper.GetRealtime(delay);
+            yield return new WaitForSeconds(delay);
             SaveData();
             _saveDebounce = null;
         }
 
         public void ResetData()
         {
+            Debug.Log(message:$"DataManager.Reset()");
             ResetPlayerData();
             ResetSettingsData();
+            ResetProgressData();
+            ResetInventoryData();
         }
 
-        public void SaveData(bool postData = true)
+        public void SaveData()
         {
+            Debug.Log(message:$"DataManager.SaveData()");
             SavePlayerData();
             SaveSettingsData();
+            SaveProgressData();
+            SaveInventoryData();
         }
 
-        public IEnumerator LoadData()
+        public void LoadData()
         {
-            // DebugLogger.Log();
-            yield return StartCoroutine(LoadPlayerData());
+            Debug.Log(message:$"DataManager.LoadData()");
+            /*yield return StartCoroutine(LoadPlayerData());
+            yield return StartCoroutine(LoadResourceData());
             yield return StartCoroutine(LoadSettingsData());
+            yield return StartCoroutine(LoadProgressData());*/
+            LoadPlayerData();
+            LoadSettingsData();
+            LoadProgressData();
+            LoadInventoryData();
         }
 
         #endregion
@@ -312,10 +467,11 @@ JSON for:
 
        
     }
+    
 
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
     [CustomEditor(typeof(DataManager), true)]
-    public class DataManagerCheckedInspector : Editor
+    public class DataManagerInspector : Editor
     {
         private DataManager dataManager;
 
@@ -344,5 +500,5 @@ JSON for:
             GUILayout.EndHorizontal();
         }
     }
-#endif
+#endif*/
 }

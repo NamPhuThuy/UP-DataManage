@@ -1,5 +1,5 @@
-using UnityEngine;
-namespace NamPhuThuy.Data
+/*using UnityEngine;
+namespace NamPhuThuy.DataManage
 {
     /// <summary>
     /// Easy to use, auto-creates instances, and is suitable for simple cases.
@@ -7,52 +7,20 @@ namespace NamPhuThuy.Data
     /// <typeparam name="T"></typeparam>
     public class Singleton<T> : MonoBehaviour where T : Component
     {
-        private static T _instance;
         
-        public static T Ins
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    // T[] objs = Object.FindObjectsByType<T>(FindObjectsSortMode.None);
-                    T[] objs = FindObjectsOfType<T>();
-                    if (objs.Length > 0)
-                    {
-                        T instance = objs[0];
-                        _instance = instance;
-                    }
-                    else
-                    {
-                        GameObject go = new GameObject();
-                        go.name = typeof(T).Name;
-                        _instance = go.AddComponent<T>();
-                        DontDestroyOnLoad(go);
-                    }
-
-                }
-
-                return _instance;
-            }
-        }
+     
         
-        protected virtual void Awake()
-        {
-            if (!_instance)
-            {
-                // Debug.Log($"Singleton<{typeof(T).Name}> Awake");
-                _instance = Object.FindFirstObjectByType<T>();
-                OnInitialization();
-            }
-        }
+       
         
-        public virtual void OnDestroy()
-        {
-            _instance = null;
-            OnExtinction();
-        }
+        /// <summary>
+        /// Called when the singleton is first initialized.
+        /// Override this instead of Awake for initialization logic.
+        /// </summary>
+       
         
-        public virtual void OnInitialization() { }
-        public virtual void OnExtinction() { }
+        /// <summary>
+        /// Checks if an instance exists without creating one.
+        /// </summary>
+        
     }
-}
+}*/

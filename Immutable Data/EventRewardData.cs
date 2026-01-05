@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
 using NamPhuThuy.Common;
+
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace NamPhuThuy.Data
+namespace NamPhuThuy.DataManage
 {
     [CreateAssetMenu(fileName = "EventRewardData", menuName = "Game/EventRewardData")]
     public class EventRewardData : ScriptableObject

@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using NamPhuThuy.Data;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace NamPhuThuy.Data
+namespace NamPhuThuy.DataManage
 {
     /// <summary>
     /// Testing, not being used yet
@@ -101,7 +100,7 @@ namespace NamPhuThuy.Data
 
         public int amount;
 
-        public ResourceAmount(ResourceType resourceType = ResourceType.COIN, BoosterType boosterType = BoosterType.NONE, int pictureId = -1, int amount = 0)
+        public ResourceAmount(ResourceType resourceType = ResourceType.COIN, BoosterType boosterType = BoosterType.NONE, int amount = 0)
         {
             this.resourceType = resourceType;
             this.boosterType = boosterType;

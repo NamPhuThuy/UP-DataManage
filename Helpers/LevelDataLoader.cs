@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace NamPhuThuy.Data
+namespace NamPhuThuy.DataManage
 {
     public class LevelDataLoader : MonoBehaviour
     {

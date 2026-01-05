@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace NamPhuThuy.Data
+namespace NamPhuThuy.DataManage
 {
     public class HelpBoxAttribute : PropertyAttribute
     {
