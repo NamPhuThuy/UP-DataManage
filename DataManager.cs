@@ -65,12 +65,12 @@ JSON for:
 
         private void OnEnable()
         {
-            MMEventManager.RegisterAllCurrentEvents(this);
+            MMEventManager.RegistCurrentEvents(this);
         }
 
         private void OnDisable()
         {
-            MMEventManager.UnregisterAllCurrentEvents(this);
+            MMEventManager.UnregistCurrentEvents(this);
         }
 
         /*
