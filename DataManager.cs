@@ -113,7 +113,7 @@ JSON for:
             _playerDataPath = $"{Application.persistentDataPath}/player.{DataConst.FILES_EXTENSION}";
             _settingsDataPath = $"{Application.persistentDataPath}/settings.{DataConst.FILES_EXTENSION}";
             _progressDataPath = $"{Application.persistentDataPath}/progress.{DataConst.FILES_EXTENSION}";
-            _inventoryDataPath = $"{Application.persistentDataPath}/resource.{DataConst.FILES_EXTENSION}";
+            _inventoryDataPath = $"{Application.persistentDataPath}/inventory.{DataConst.FILES_EXTENSION}";
 
             // yield return StartCoroutine(LoadData());
             LoadData();
@@ -182,7 +182,7 @@ JSON for:
         
         public void SaveInventoryData()
         {
-            _inventoryDataPath = $"{Application.persistentDataPath}/resource.{DataConst.FILES_EXTENSION}";
+            _inventoryDataPath = $"{Application.persistentDataPath}/inventory.{DataConst.FILES_EXTENSION}";
             // PInventoryData.SyncDictToListForSave();
             
             string origin = JsonUtility.ToJson(cachedPInventoryData);
@@ -283,7 +283,7 @@ JSON for:
         
         private void LoadInventoryData()
         {
-            _inventoryDataPath = $"{Application.persistentDataPath}/resource.{DataConst.FILES_EXTENSION}";
+            _inventoryDataPath = $"{Application.persistentDataPath}/inventory.{DataConst.FILES_EXTENSION}";
             if (File.Exists(_inventoryDataPath))
             {
                 try
@@ -466,12 +466,6 @@ private IEnumerator SaveAfterDelay(float delay)
         }
 
         #endregion
-
-
-      
-
-
-       
     }
     
 
