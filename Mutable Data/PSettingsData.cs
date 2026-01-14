@@ -4,7 +4,7 @@ namespace NamPhuThuy.DataManage
 {
     
     [Serializable]
-    public partial class PlayerSettingsData
+    public partial class PSettingsData
     {
         public float musicVolume;
         public float sfxVolume;
@@ -14,7 +14,7 @@ namespace NamPhuThuy.DataManage
         public bool vibrationEnabled;
         public bool notifyEnabled;
 
-        public PlayerSettingsData(bool musicEnabled = true, bool sfxEnabled = true, bool vibrationEnabled = true, bool notifyEnabled = true)
+        public PSettingsData(bool musicEnabled = true, bool sfxEnabled = true, bool vibrationEnabled = true, bool notifyEnabled = true)
         {
             this.musicEnabled = musicEnabled;
             this.sfxEnabled = sfxEnabled;

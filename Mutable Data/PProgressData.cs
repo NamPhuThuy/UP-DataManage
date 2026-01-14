@@ -14,6 +14,7 @@ namespace NamPhuThuy.DataManage
             {
                 levelId = value;
                 levelId = Math.Max(0, value);
+                Debug.Log(message:$"levelId: {levelId}");
                 DataManager.Ins.MarkDirty();
             }
             

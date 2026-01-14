@@ -114,6 +114,7 @@ JSON for:
             _settingsDataPath = $"{Application.persistentDataPath}/settings.{DataConst.FILES_EXTENSION}";
             _progressDataPath = $"{Application.persistentDataPath}/progress.{DataConst.FILES_EXTENSION}";
             _inventoryDataPath = $"{Application.persistentDataPath}/inventory.{DataConst.FILES_EXTENSION}";
+            _albumDataPath = $"{Application.persistentDataPath}/album.{DataConst.FILES_EXTENSION}";
 
             // yield return StartCoroutine(LoadData());
             LoadData();
@@ -150,24 +151,11 @@ JSON for:
 
         #region Save Methods
 
-        public void SavePlayerData()
-        {
-            _playerDataPath = $"{Application.persistentDataPath}/player.{DataConst.FILES_EXTENSION}";
-
-            //example: origin = "{"name":"NamTrinh","level":12,"currentExpPoint":31.0}"
-            string data = JsonUtility.ToJson(cachedPlayerData);
-            
-            // Got problem when save/load with encrypt
-            // origin = EncryptHelper.XOROperator(origin, DataConst.DATA_ENCRYPT_KEY);
-
-            File.WriteAllText(_playerDataPath, data);
-            // DebugLogger.Log(message:$"Save data success: {data}");
-        }
 
         public void SaveSettingsData()
         {
             _settingsDataPath = $"{Application.persistentDataPath}/settings.{DataConst.FILES_EXTENSION}";
-            string origin = JsonUtility.ToJson(cachedPlayerSettingsData);
+            string origin = JsonUtility.ToJson(cachedPSettingsData);
             // origin = EncryptHelper.XOROperator(origin, DataConst.DATA_ENCRYPT_KEY);
             File.WriteAllText(_settingsDataPath, origin);
         }
@@ -175,7 +163,10 @@ JSON for:
         public void SaveProgressData()
         {
             _progressDataPath = $"{Application.persistentDataPath}/progress.{DataConst.FILES_EXTENSION}";
+            
+            //example: origin = "{"name":"NamTrinh","level":12,"currentExpPoint":31.0}"
             string origin = JsonUtility.ToJson(cachedPProgressData);
+            // Got problem when save/load with encrypt
             // origin = EncryptHelper.XOROperator(origin, DataConst.DATA_ENCRYPT_KEY);
             File.WriteAllText(_progressDataPath, origin);
         }
@@ -189,44 +180,17 @@ JSON for:
             // origin = EncryptHelper.XOROperator(origin, DataConst.DATA_ENCRYPT_KEY);
             File.WriteAllText(_inventoryDataPath, origin);
         }
+        
+        public void SavePAlbumData()
+        {
+            _albumDataPath = $"{Application.persistentDataPath}/album.{DataConst.FILES_EXTENSION}";
+            string origin = JsonUtility.ToJson(cachedPAlbumData);
+            File.WriteAllText(_albumDataPath, origin);
+        }
 
         #endregion
 
         #region  Load Methods
-
-        private void LoadPlayerData()
-        {
-            // DebugLogger.Log();
-            _playerDataPath = $"{Application.persistentDataPath}/player.{DataConst.FILES_EXTENSION}";
-            if (File.Exists(_playerDataPath))
-            {
-                try
-                {
-                    /*
-                 File.ReadAllText(_savePath) reads from disk
-                 Disk operations are significantly slower than memory operations
-                 Can cause frame drops if called during gameplay
-                 */
-                    string data = File.ReadAllText(_playerDataPath);
-
-                    //Large string operations can be memory and CPU intensive
-                    
-                    // Got problem when save/load with encrypt
-                    // data = EncryptHelper.XOROperator(data, DataConst.DATA_ENCRYPT_KEY);
-                    cachedPlayerData = JsonUtility.FromJson<PlayerData>(data);
-                    // DebugLogger.Log(message:$"Load data success: {data}");
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError(message: $"Error: {e.Message}");
-                    ResetPlayerData();
-                }
-            }
-            else
-                ResetPlayerData();
-
-            // yield return null;
-        }
 
         private void LoadSettingsData()
         {
@@ -237,7 +201,7 @@ JSON for:
                 {
                     string data = File.ReadAllText(_settingsDataPath);
                     // data = EncryptHelper.XOROperator(data, DataConst.DATA_ENCRYPT_KEY);
-                    cachedPlayerSettingsData = JsonUtility.FromJson<PlayerSettingsData>(data);
+                    cachedPSettingsData = JsonUtility.FromJson<PSettingsData>(data);
                     
                 }
                 catch (Exception e)
@@ -261,7 +225,18 @@ JSON for:
                 Debug.Log(message:$"DataManager.LoadProgressData() - {_progressDataPath} exist, load data");
                 try
                 {
+                    
+                    /*
+              File.ReadAllText(_savePath) reads from disk
+              Disk operations are significantly slower than memory operations
+              Can cause frame drops if called during gameplay
+              */
                     string data = File.ReadAllText(_progressDataPath);
+                    
+                    
+                    //Large string operations can be memory and CPU intensive
+                    
+                    // Got problem when save/load with encrypt
                     // data = EncryptHelper.XOROperator(data, DataConst.DATA_ENCRYPT_KEY);
                     cachedPProgressData = JsonUtility.FromJson<PProgressData>(data);
                     _isProgressDataLoaded = true;
@@ -304,20 +279,33 @@ JSON for:
             // yield return null;
         }
         
+        private void LoadPAlbumData()
+        {
+            _albumDataPath = $"{Application.persistentDataPath}/album.{DataConst.FILES_EXTENSION}";
+            if (File.Exists(_albumDataPath))
+            {
+                try
+                {
+                    string data = File.ReadAllText(_albumDataPath);
+                    cachedPAlbumData = JsonUtility.FromJson<PAlbumData>(data);
+                }
+                catch (Exception e)
+                {
+                    ResetPAlbumData();
+                }
+            }
+            else
+                ResetPAlbumData();
+        }
+        
 
         #endregion
 
         #region Reset Methods
         
-        public void ResetPlayerData()
-        {
-            cachedPlayerData = new PlayerData();
-            SavePlayerData();
-        }
-
         public void ResetSettingsData()
         {
-            cachedPlayerSettingsData = new PlayerSettingsData();
+            cachedPSettingsData = new PSettingsData();
             SaveSettingsData();
         }
         
@@ -332,6 +320,12 @@ JSON for:
         {
             cachedPInventoryData = new PInventoryData();
             SaveInventoryData();
+        }
+        
+        public void ResetPAlbumData()
+        {
+            cachedPAlbumData = new PAlbumData();
+            SavePAlbumData();
         }
 
         #endregion
@@ -354,19 +348,19 @@ private IEnumerator SaveAfterDelay(float delay)
         public void ResetData()
         {
             Debug.Log(message:$"DataManager.Reset()");
-            ResetPlayerData();
             ResetSettingsData();
             ResetProgressData();
             ResetInventoryData();
+            ResetPAlbumData();
         }
 
         public void SaveData()
         {
             Debug.Log(message:$"DataManager.SaveData()");
-            SavePlayerData();
             SaveSettingsData();
             SaveProgressData();
             SaveInventoryData();
+            SavePAlbumData();
         }
 
         public void LoadData()
@@ -376,10 +370,10 @@ private IEnumerator SaveAfterDelay(float delay)
             yield return StartCoroutine(LoadResourceData());
             yield return StartCoroutine(LoadSettingsData());
             yield return StartCoroutine(LoadProgressData());*/
-            LoadPlayerData();
             LoadSettingsData();
             LoadProgressData();
             LoadInventoryData();
+            LoadPAlbumData();
         }
 
         #endregion
@@ -461,8 +455,8 @@ private IEnumerator SaveAfterDelay(float delay)
             {
                 DebugLogger.Log($"DataManager.MinusBoosterAmount() failed", Color.black);
             }*/
-            var n = PlayerData.GetBoosterNum(type);
-            PlayerData.SetBoosterNum(type, Mathf.Max(0, n - 1));
+            var n = PInventoryData.GetBoosterNum(type);
+            PInventoryData.SetBoosterNum(type, Mathf.Max(0, n - 1));
         }
 
         #endregion

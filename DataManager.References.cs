@@ -33,22 +33,7 @@ namespace NamPhuThuy.DataManage
       
         
 
-        [SerializeField] private PlayerData cachedPlayerData;
-
-        public PlayerData PlayerData // Lazy loading - only load when needed
-        {
-            get
-            {
-                if (!_isPlayerDataLoaded)
-                {
-                    // StartCoroutine(LoadPlayerData());
-                    LoadPlayerData();
-                    _isPlayerDataLoaded = true;
-                }
-
-                return cachedPlayerData;
-            }
-        }
+        
 
         [SerializeField] private PProgressData cachedPProgressData;
         
@@ -68,9 +53,9 @@ namespace NamPhuThuy.DataManage
         }
 
 
-        [SerializeField] private PlayerSettingsData cachedPlayerSettingsData;
+        [SerializeField] private PSettingsData cachedPSettingsData;
 
-        public PlayerSettingsData PlayerSettingsData
+        public PSettingsData PSettingsData
         {
             get
             {
@@ -81,7 +66,7 @@ namespace NamPhuThuy.DataManage
                     _isSettingsDataLoaded = true;
                 }
 
-                return cachedPlayerSettingsData;
+                return cachedPSettingsData;
             }
         }
         
@@ -101,7 +86,7 @@ namespace NamPhuThuy.DataManage
                 return cachedPInventoryData;
             }
         }
-      
+        
         #endregion
         
         #region Immutable Datas
