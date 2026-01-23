@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace NamPhuThuy.DataManage
 {
@@ -33,7 +34,20 @@ namespace NamPhuThuy.DataManage
             }
         }
 
-        public int CurrentBackgroundId { get; set; }
+        [SerializeField] private int currentBackgroundId;
+
+        public int CurrentBackgroundId
+        {
+            get
+            {
+                return currentBackgroundId;
+            }
+            set
+            {
+                currentBackgroundId = value;
+            }
+            
+        }
 
         public void RemoveAds()
         {
