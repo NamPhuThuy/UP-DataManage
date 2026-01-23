@@ -15,5 +15,8 @@ namespace NamPhuThuy.DataManage
 
         public const int CHEAT_COIN_AMOUNT = 3000;
         public const int CHEAT_BOOSTER_AMOUNT = 20;
+        
+        // GALLERY
+        public const int DEFAULT_ALBUM_ID = 0;
     }
 }

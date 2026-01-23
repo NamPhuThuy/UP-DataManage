@@ -18,8 +18,20 @@ namespace NamPhuThuy.DataManage
                 Debug.Log(message:$"levelId: {levelId}");
                 DataManager.Ins.MarkDirty();
             }
-            
         }
+
+        [SerializeField] private bool isFirstTimePlay = true;
+
+        public bool IsFirstTimePlay
+        {
+            get => isFirstTimePlay;
+            set
+            {
+                isFirstTimePlay = value;
+                DataManager.Ins.MarkDirty();
+            }
+        }
+        
 
         [SerializeField] private bool isAdsRemoved;
         public bool IsVIP;
@@ -45,6 +57,7 @@ namespace NamPhuThuy.DataManage
             set
             {
                 currentBackgroundId = value;
+                DataManager.Ins.MarkDirty();
             }
             
         }
