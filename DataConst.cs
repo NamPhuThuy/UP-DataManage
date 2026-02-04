@@ -18,5 +18,9 @@ namespace NamPhuThuy.DataManage
         
         // GALLERY
         public const int DEFAULT_ALBUM_ID = 0;
+        public const int DEFAULT_GALLERY_MILESTONE = 10;
+        
+        // GamePlay
+        public const int COIN_REWARD_LEVEL_MILESTONE = 5;
     }
 }

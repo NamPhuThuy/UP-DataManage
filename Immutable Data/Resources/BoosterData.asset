@@ -72,9 +72,12 @@ MonoBehaviour:
       type: 3}
     inventoryImage: {fileID: 0}
   - boosterType: 9
-    unlockLevel: 0
+    unlockLevel: 4
     stackPerBuy: 0
-    price: []
+    price:
+    - resourceType: 1
+      boosterType: 0
+      amount: 300
     boosterName: 
     offerDescription: 
     gameplayImage: {fileID: 21300000, guid: 881368a45176b9c49bf40a9dcb4fe027, type: 3}
@@ -82,7 +85,10 @@ MonoBehaviour:
   - boosterType: 4
     unlockLevel: 0
     stackPerBuy: 0
-    price: []
+    price:
+    - resourceType: 1
+      boosterType: 0
+      amount: 250
     boosterName: 
     offerDescription: 
     gameplayImage: {fileID: 21300000, guid: 07256e6d398c27a46b3bcf4120a5c6a0, type: 3}

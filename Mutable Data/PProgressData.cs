@@ -62,6 +62,22 @@ namespace NamPhuThuy.DataManage
             
         }
 
+        [SerializeField] private int currentAlbumRewardId;
+        [SerializeField] private float currentCoinRewardProgress;
+
+        public float CurrentCoinRewardProgress
+        {
+            get
+            {
+                return currentCoinRewardProgress;
+            }
+            set
+            {
+                currentCoinRewardProgress = value;
+                DataManager.Ins.MarkDirty();
+            }
+        }
+
         public void RemoveAds()
         {
             IsAdsRemoved = true;
