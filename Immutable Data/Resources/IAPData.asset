@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc02a3fdb9b023144954491f59dc1c8f, type: 3}
   m_Name: IAPData
   m_EditorClassIdentifier: 
-  iapRecords: []
+  records:
+  - bundleName: 
+    bundleId: 
+    iapType: 0
+    titleImage: {fileID: 0}
+    subTitleImage: {fileID: 0}
+    description: 
+    price: 
+    rewards: []

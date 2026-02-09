@@ -15,7 +15,8 @@ MonoBehaviour:
   resourceRecords:
   - resourceType: 1
     boosterType: 0
-    gameplayImage: {fileID: 21300000, guid: 918503d338ab4ef40add5d34e38065c2, type: 3}
+    gameplayImage: {fileID: 8139719423079072813, guid: 60c6a14ce69e5164ab569c5297898617,
+      type: 3}
     inventoryImage: {fileID: 21300000, guid: 918503d338ab4ef40add5d34e38065c2, type: 3}
     description: 
     priceInResources: []

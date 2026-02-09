@@ -29,6 +29,7 @@ JSON for:
         private bool isCheatMode = true;
 
         public bool IsCheatMode => isCheatMode;
+        public bool isGrantRewardsAfterLevel;
 
         #region Private Fields
 
