@@ -1,0 +1,192 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc02a3fdb9b023144954491f59dc1c8f, type: 3}
+  m_Name: IAPData - Shop
+  m_EditorClassIdentifier: 
+  records:
+  - bundleName: Super Bundle
+    bundleId: com.gplay.mahjonggirl.super_bundle
+    iapType: 0
+    titleImage: {fileID: 21300000, guid: 9422e5ee167fbd549b8308c3992bb086, type: 3}
+    backgroundSprite: {fileID: -1311375034365778298, guid: 4cb325fa77ca4dc489fac031033c5453,
+      type: 3}
+    subTitleImage: {fileID: 0}
+    description: Super Bundle
+    price: 
+    rewards:
+    - resourceType: 1
+      boosterType: 0
+      amount: 240
+    - resourceType: 2
+      boosterType: 9
+      amount: 3
+    - resourceType: 2
+      boosterType: 3
+      amount: 3
+  - bundleName: Mega Bundle
+    bundleId: com.gplay.mahjonggirl.mega_bundle
+    iapType: 0
+    titleImage: {fileID: 21300000, guid: f685549dc9f8dd54d808cf68ed231a33, type: 3}
+    backgroundSprite: {fileID: -8469449408504268491, guid: 59b6d9fb46ab271479bbcae6086ba47a,
+      type: 3}
+    subTitleImage: {fileID: 0}
+    description: Mega Bundle
+    price: 
+    rewards:
+    - resourceType: 1
+      boosterType: 0
+      amount: 720
+    - resourceType: 2
+      boosterType: 9
+      amount: 6
+    - resourceType: 2
+      boosterType: 3
+      amount: 6
+  - bundleName: Brilliant Bundle
+    bundleId: com.gplay.mahjonggirl.brilliant_bundle
+    iapType: 0
+    titleImage: {fileID: 21300000, guid: a5131d06a31a6d34ba7aae5911ddc348, type: 3}
+    backgroundSprite: {fileID: 2291440534278836905, guid: 3f3e4175eaedb3149a2bea5a4239333f,
+      type: 3}
+    subTitleImage: {fileID: 0}
+    description: Brilliant Bundle
+    price: 
+    rewards:
+    - resourceType: 1
+      boosterType: 0
+      amount: 3200
+    - resourceType: 2
+      boosterType: 9
+      amount: 12
+    - resourceType: 2
+      boosterType: 3
+      amount: 12
+  - bundleName: Ultimate Bundle
+    bundleId: com.gplay.mahjonggirl.ultimate_bundle
+    iapType: 0
+    titleImage: {fileID: 21300000, guid: 85dc10fc4bb584c42a5a76f9c121c125, type: 3}
+    backgroundSprite: {fileID: -4336234145963523973, guid: 8e922f71f097c244f8121ac2240e729c,
+      type: 3}
+    subTitleImage: {fileID: 0}
+    description: Ultimate Bundle
+    price: 
+    rewards:
+    - resourceType: 1
+      boosterType: 0
+      amount: 6600
+    - resourceType: 2
+      boosterType: 9
+      amount: 24
+    - resourceType: 2
+      boosterType: 3
+      amount: 24
+  - bundleName: No ads pack
+    bundleId: com.gplay.mahjonggirl.removeadspack
+    iapType: 2
+    titleImage: {fileID: -8212536647637306368, guid: cd13a69317f2c7f4b8098a7c011d29b4,
+      type: 3}
+    backgroundSprite: {fileID: 0}
+    subTitleImage: {fileID: 0}
+    description: No ads + 300 coins
+    price: 
+    rewards:
+    - resourceType: 5
+      boosterType: 0
+      amount: 0
+    - resourceType: 1
+      boosterType: 0
+      amount: 300
+  - bundleName: No ads
+    bundleId: com.gplay.mahjonggirl.removeads
+    iapType: 2
+    titleImage: {fileID: -8212536647637306368, guid: cd13a69317f2c7f4b8098a7c011d29b4,
+      type: 3}
+    backgroundSprite: {fileID: 0}
+    subTitleImage: {fileID: 0}
+    description: No ads
+    price: 
+    rewards:
+    - resourceType: 5
+      boosterType: 0
+      amount: 0
+  - bundleName: Coin Pack 1
+    bundleId: com.gplay.mahjonggirl.coinpack1
+    iapType: 1
+    titleImage: {fileID: 21300000, guid: 1601da2793003ed4ebb7465c19f3b51c, type: 3}
+    backgroundSprite: {fileID: 0}
+    subTitleImage: {fileID: 0}
+    description: 
+    price: 
+    rewards:
+    - resourceType: 1
+      boosterType: 0
+      amount: 240
+  - bundleName: Coin Pack 2
+    bundleId: com.gplay.mahjonggirl.coinpack2
+    iapType: 1
+    titleImage: {fileID: 21300000, guid: a7eb9454630fc7446aa168722b689c32, type: 3}
+    backgroundSprite: {fileID: 0}
+    subTitleImage: {fileID: 0}
+    description: 
+    price: 
+    rewards:
+    - resourceType: 1
+      boosterType: 0
+      amount: 720
+  - bundleName: Coin Pack 3
+    bundleId: com.gplay.mahjonggirl.coinpack3
+    iapType: 1
+    titleImage: {fileID: 21300000, guid: 8cc6db731fa6343499f211dff513fb45, type: 3}
+    backgroundSprite: {fileID: 0}
+    subTitleImage: {fileID: 0}
+    description: 
+    price: 
+    rewards:
+    - resourceType: 1
+      boosterType: 0
+      amount: 1500
+  - bundleName: Coin Pack 4
+    bundleId: com.gplay.mahjonggirl.coinpack4
+    iapType: 1
+    titleImage: {fileID: 21300000, guid: 1d9cbf399d466414494ea4f67c10e1b5, type: 3}
+    backgroundSprite: {fileID: 0}
+    subTitleImage: {fileID: 0}
+    description: 
+    price: 
+    rewards:
+    - resourceType: 1
+      boosterType: 0
+      amount: 3200
+  - bundleName: Coin Pack 5
+    bundleId: com.gplay.mahjonggirl.coinpack5
+    iapType: 1
+    titleImage: {fileID: 21300000, guid: af62c9980cdd7c146aa031babbfff325, type: 3}
+    backgroundSprite: {fileID: 0}
+    subTitleImage: {fileID: 0}
+    description: 
+    price: 
+    rewards:
+    - resourceType: 1
+      boosterType: 0
+      amount: 6600
+  - bundleName: Coin Pack 6
+    bundleId: com.gplay.mahjonggirl.coinpack6
+    iapType: 1
+    titleImage: {fileID: 21300000, guid: 991dbee64d552a5429454332d13bf6b8, type: 3}
+    backgroundSprite: {fileID: 0}
+    subTitleImage: {fileID: 0}
+    description: 
+    price: 
+    rewards:
+    - resourceType: 1
+      boosterType: 0
+      amount: 15000

@@ -45,23 +45,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14862124ddedc445972a184b0e2954a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodData: {fileID: 11400000, guid: 1c3b39417340b7a4b85a38633f56c55b, type: 2}
-  conceptData: {fileID: 11400000, guid: 9c98df0161479b4458e1f1c9b6fedf6c, type: 2}
-  eventRewardData: {fileID: 11400000, guid: 236599fc25a879746a4f4e9bb40836db, type: 2}
-  levelData: {fileID: 11400000, guid: 06de3165dd342974f9effa3fefa1b3bb, type: 2}
-  grillMechanicData: {fileID: 11400000, guid: 1265fa8d914a46c4b87d51977ca50c18, type: 2}
+  tileSetData: {fileID: 11400000, guid: e8366e4e5cd56524fba0dcad753b7631, type: 2}
+  currentTileSetRecord: {fileID: 11400000, guid: 3eed49543d179ae48bae9c87c762842e,
+    type: 2}
+  albumData: {fileID: 11400000, guid: 2c1c96131a29aee4fb53a493113ab901, type: 2}
+  albumRewardData: {fileID: 11400000, guid: 5aa0c2e9f8280934abcb253b53503ff1, type: 2}
+  galleryPackData: {fileID: 11400000, guid: b1ff16ac45fd8f644a9c5414b53f265a, type: 2}
+  cachedPAlbumData:
+    isUnlockedAllAnimePics: 0
+    isUnlockedAllSexyPics: 0
+    isUnlockedAllUniformPics: 0
+    playerPictures: []
+  isGrantRewardsAfterLevel: 0
   levelDataLoader: {fileID: 226066221087009291}
   defaultFont: {fileID: 11400000, guid: 3a3996006de193546b3a25b9393d4c5f, type: 2}
-  cachedPlayerData:
-    coin: 0
-    remainTimeForNextHeart: 0
-    lastSessionTimestamp: 0
-    health: 0
-    boosters: []
   cachedPProgressData:
     levelId: 0
+    isFirstTimePlay: 1
     isAdsRemoved: 0
-  cachedPlayerSettingsData:
+    IsVIP: 0
+    currentBackgroundId: 0
+    currentFavoriteStyleId: 0
+    currentAlbumRewardId: 0
+    currentCoinRewardProgress: 0
+  cachedPSettingsData:
     musicVolume: 0
     sfxVolume: 0
     musicEnabled: 0
@@ -69,13 +76,7 @@ MonoBehaviour:
     vibrationEnabled: 0
     notifyEnabled: 0
   cachedPInventoryData:
-    resources:
-    - resourceType: 1
-      boosterType: 0
-      amount: 0
-    - resourceType: 3
-      boosterType: 0
-      amount: 5
+    coin: 0
     boosters:
     - boosterType: 1
       amount: 0
@@ -83,10 +84,14 @@ MonoBehaviour:
       amount: 0
     - boosterType: 3
       amount: 0
+    remainTimeForNextHeart: 0
+    lastSessionTimestamp: 0
+    health: 0
   isUseRemoteConfig: 0
   iapData: {fileID: 11400000, guid: 804748045dba7bb4195098c4b49145c4, type: 2}
   resourceData: {fileID: 11400000, guid: 71c2cedce318abd43ac2a8f21d14c10b, type: 2}
   boosterData: {fileID: 11400000, guid: daa0c1834c1c9344a985a099d7a9940c, type: 2}
+  eventRewardData: {fileID: 11400000, guid: 236599fc25a879746a4f4e9bb40836db, type: 2}
 --- !u!1 &9200000017301800076
 GameObject:
   m_ObjectHideFlags: 0

@@ -98,18 +98,18 @@ namespace NamPhuThuy.DataManage
       
       
 
-        [SerializeField] private IAPData iapData;
+        [SerializeField] private IAPData iapData_Shop;
 
-        public IAPData IAPData
+        public IAPData IAPDataShop
         {
             get
             {
-                if (iapData == null)
+                if (iapData_Shop == null)
                 {
-                    iapData = Resources.Load<IAPData>("IAPData");
+                    iapData_Shop = Resources.Load<IAPData>("IAPData - Shop");
                 }
 
-                return iapData;
+                return iapData_Shop;
             }
         }
 
