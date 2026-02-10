@@ -61,6 +61,22 @@ namespace NamPhuThuy.DataManage
             }
             
         }
+        
+        [SerializeField] private int currentFavoriteStyleId;
+
+        public int CurrentFavoriteStyleId
+        {
+            get
+            {
+                return currentFavoriteStyleId;
+            }
+            set
+            {
+                currentFavoriteStyleId = value;
+                DataManager.Ins.MarkDirty();
+            }
+            
+        }
 
         [SerializeField] private int currentAlbumRewardId;
         [SerializeField] private float currentCoinRewardProgress;

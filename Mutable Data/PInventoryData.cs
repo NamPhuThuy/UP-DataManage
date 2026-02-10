@@ -156,23 +156,26 @@ namespace NamPhuThuy.DataManage
         public int Coin
         {
             get => coin;
-            set
+            private set
             {
                 coin = value;
                 coin = Math.Max(0, value);
-
-                DataManager.Ins.MarkDirty();
-                MMEventManager.TriggerEvent(new EResourceUpdated()
-                {
-                    ResourceType = ResourceType.COIN
-                });
+                
+                Debug.Log(message:$"DataManager.Coin: new value: {value}");
             }
         }
 
-        public void AddCoins(int amount)
+        public void AddCoins(int amount, bool isUseUpdateAnim = true)
         {
             if (amount <= 0) return;
             Coin = coin + amount;
+            
+            DataManager.Ins.MarkDirty();
+            MMEventManager.TriggerEvent(new EResourceUpdated()
+            {
+                ResourceType = ResourceType.COIN,
+                IsUseUpdateAnim = isUseUpdateAnim
+            });
         }
 
         public bool TrySpendCoins(int amount)
@@ -252,8 +255,9 @@ namespace NamPhuThuy.DataManage
         /// <summary>
         /// Apply a list of rewards to the player. Returns true if anything was granted.
         /// </summary>
-        public bool TryApplyRewards(IList<ResourceAmount> rewards, int amountMultiplier = 1)
+        public bool TryApplyRewards(IList<ResourceAmount> rewards, int amountMultiplier = 1, bool isUseUpdateAnim = true)
         {
+            Debug.Log(message:$"DataManager.TryApplyRewards()");
             if (rewards == null || rewards.Count == 0) return false;
 
             bool anyGranted = false;
@@ -269,7 +273,7 @@ namespace NamPhuThuy.DataManage
                     case ResourceType.COIN:
                         if (amount <= 0) break;
 
-                        DataManager.Ins.PInventoryData.AddCoins(amount);
+                        DataManager.Ins.PInventoryData.AddCoins(amount, isUseUpdateAnim);
                         anyGranted = true;
                         break;
 

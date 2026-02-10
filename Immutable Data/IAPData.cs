@@ -81,6 +81,7 @@ namespace NamPhuThuy.DataManage
         [SerializeField] private string bundleId;
         [SerializeField] private IAPType iapType;
         [SerializeField] private Sprite titleImage;
+        [SerializeField] private Sprite backgroundSprite;
         [SerializeField] private Sprite subTitleImage;
         [SerializeField] private string description;
         [SerializeField] private string price;
@@ -91,6 +92,9 @@ namespace NamPhuThuy.DataManage
         public string BundleId => bundleId;
         public IAPType Type => iapType;
         public Sprite TitleImage => titleImage;
+
+        public Sprite BackgroundSprite => backgroundSprite;
+
         public Sprite SubTitleImage => subTitleImage;
         public string Description => description;
         public string Price => price;
