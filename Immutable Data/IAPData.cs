@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using UnityEngine.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -12,6 +13,8 @@ namespace NamPhuThuy.DataManage
     {
         [Header("IAP Data")]
         [SerializeField] private IAPRecord[] records;
+        public IAPRecord[] Records => records;
+        
         private Dictionary<string, IAPRecord> _dictRecordByID;
 
         public Dictionary<string, IAPRecord> Data
@@ -80,6 +83,7 @@ namespace NamPhuThuy.DataManage
         [SerializeField] private string bundleName;
         [SerializeField] private string bundleId;
         [SerializeField] private IAPType iapType;
+        [SerializeField] private ProductType productType = ProductType.Consumable;
         [SerializeField] private Sprite titleImage;
         [SerializeField] private Sprite backgroundSprite;
         [SerializeField] private Sprite subTitleImage;
@@ -91,13 +95,26 @@ namespace NamPhuThuy.DataManage
         public string BundleName => bundleName;
         public string BundleId => bundleId;
         public IAPType Type => iapType;
+        public ProductType ProductType => productType;
         public Sprite TitleImage => titleImage;
 
         public Sprite BackgroundSprite => backgroundSprite;
 
         public Sprite SubTitleImage => subTitleImage;
         public string Description => description;
-        public string Price => price;
+
+        public string Price
+        {
+            get
+            {
+                return price;
+            }
+
+            set
+            {
+                price = value;
+            }
+        }
         public List<ResourceAmount> Rewards => rewards;
     }
 }

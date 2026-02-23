@@ -22,5 +22,9 @@ namespace NamPhuThuy.DataManage
         
         // GamePlay
         public const int COIN_REWARD_LEVEL_MILESTONE = 1; // 
+        public const string DEFAULT_TILE_SET_NAME = "TileSetRecord - MINIMAL_TEST";
+        public const string TILE_SET_NAME_MINIMAL = "TileSetRecord - MINIMAL";
+        public const string TILE_SET_NAME_MINIMAL_TEST = "TileSetRecord - MINIMAL_TEST";
+        public const string TILE_SET_NAME_CLASSIC = "TileSetRecord - CLASSIC";
     }
 }

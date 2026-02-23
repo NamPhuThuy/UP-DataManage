@@ -20,6 +20,12 @@ namespace NamPhuThuy.DataManage
             }
         }
 
+        public void IncreaseCurrentLevel()
+        {
+            Debug.Log(message:$"PProgressData.IncreaseCurrentLevel()");
+            LevelId++;
+        }
+
         [SerializeField] private bool isFirstTimePlay = true;
 
         public bool IsFirstTimePlay
@@ -32,10 +38,18 @@ namespace NamPhuThuy.DataManage
             }
         }
         
+        [SerializeField] private bool isVIP;
+        public bool IsVIP
+        {
+            get => isVIP;
+            set
+            {
+                isVIP = value;
+                DataManager.Ins.MarkDirty();
+            }
+        }
 
         [SerializeField] private bool isAdsRemoved;
-        public bool IsVIP;
-
         public bool IsAdsRemoved 
         {
             get => isAdsRemoved;
@@ -44,6 +58,11 @@ namespace NamPhuThuy.DataManage
                 isAdsRemoved = value;
                 DataManager.Ins.MarkDirty();
             }
+        }
+        
+        public void RemoveAds()
+        {
+            IsAdsRemoved = true;
         }
 
         [SerializeField] private int currentBackgroundId;
@@ -94,11 +113,16 @@ namespace NamPhuThuy.DataManage
             }
         }
 
-        public void RemoveAds()
+        [SerializeField] private string tileSetName = DataConst.DEFAULT_TILE_SET_NAME;
+        public string TileSetName
         {
-            IsAdsRemoved = true;
+            get => tileSetName;
+            set
+            {
+                tileSetName = value;
+                DataManager.Ins.UpdateTileRecord();
+                DataManager.Ins.MarkDirty();
+            }
         }
-
-       
     }
 }
