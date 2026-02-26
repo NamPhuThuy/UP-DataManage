@@ -21,10 +21,10 @@ namespace NamPhuThuy.DataManage
         public const int DEFAULT_GALLERY_MILESTONE = 10;
         
         // GamePlay
-        public const int COIN_REWARD_LEVEL_MILESTONE = 1; // 
-        public const string DEFAULT_TILE_SET_NAME = "TileSetRecord - MINIMAL_TEST";
+        public const int COIN_REWARD_LEVEL_MILESTONE = 5; // 
+        public const string DEFAULT_TILE_SET_NAME = "TileSetRecord - MINIMAL";
         public const string TILE_SET_NAME_MINIMAL = "TileSetRecord - MINIMAL";
-        public const string TILE_SET_NAME_MINIMAL_TEST = "TileSetRecord - MINIMAL_TEST";
+        public const string TILE_SET_NAME_MINIMAL_02 = "TileSetRecord - MINIMAL_02";
         public const string TILE_SET_NAME_CLASSIC = "TileSetRecord - CLASSIC";
     }
 }

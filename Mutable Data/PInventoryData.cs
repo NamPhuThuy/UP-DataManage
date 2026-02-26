@@ -178,11 +178,20 @@ namespace NamPhuThuy.DataManage
             });
         }
 
-        public bool TrySpendCoins(int amount)
+        public bool TrySpendCoins(int amount, bool isUseUpdateAnim = true)
         {
             if (amount <= 0) return true;
             if (coin < amount) return false;
             Coin = coin - amount;
+            
+            DataManager.Ins.MarkDirty();
+            
+            MMEventManager.TriggerEvent(new EResourceUpdated()
+            {
+                ResourceType = ResourceType.COIN,
+                IsUseUpdateAnim = isUseUpdateAnim
+            });
+            
             return true;
         }
 
