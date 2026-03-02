@@ -46,28 +46,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileSetData: {fileID: 11400000, guid: e8366e4e5cd56524fba0dcad753b7631, type: 2}
-  currentTileSetRecord: {fileID: 11400000, guid: 3eed49543d179ae48bae9c87c762842e,
+  currentTileSetRecord: {fileID: 11400000, guid: cea6410b2d8f5594dbe6697a25dd9eda,
     type: 2}
   albumData: {fileID: 11400000, guid: 2c1c96131a29aee4fb53a493113ab901, type: 2}
   albumRewardData: {fileID: 11400000, guid: 5aa0c2e9f8280934abcb253b53503ff1, type: 2}
   galleryPackData: {fileID: 11400000, guid: b1ff16ac45fd8f644a9c5414b53f265a, type: 2}
+  iapData_VIP: {fileID: 11400000, guid: ecafb1070b75708438a689fe254642ed, type: 2}
   cachedPAlbumData:
     isUnlockedAllAnimePics: 0
     isUnlockedAllSexyPics: 0
     isUnlockedAllUniformPics: 0
-    playerPictures: []
+    playerAlbums: []
   isGrantRewardsAfterLevel: 0
   levelDataLoader: {fileID: 226066221087009291}
   defaultFont: {fileID: 11400000, guid: 3a3996006de193546b3a25b9393d4c5f, type: 2}
   cachedPProgressData:
     levelId: 0
     isFirstTimePlay: 1
+    isVIP: 0
     isAdsRemoved: 0
-    IsVIP: 0
     currentBackgroundId: 0
     currentFavoriteStyleId: 0
     currentAlbumRewardId: 0
     currentCoinRewardProgress: 0
+    tileSetName: TileSetRecord - MINIMAL
   cachedPSettingsData:
     musicVolume: 0
     sfxVolume: 0
@@ -88,7 +90,7 @@ MonoBehaviour:
     lastSessionTimestamp: 0
     health: 0
   isUseRemoteConfig: 0
-  iapData: {fileID: 11400000, guid: 804748045dba7bb4195098c4b49145c4, type: 2}
+  iapData_Shop: {fileID: 11400000, guid: 804748045dba7bb4195098c4b49145c4, type: 2}
   resourceData: {fileID: 11400000, guid: 71c2cedce318abd43ac2a8f21d14c10b, type: 2}
   boosterData: {fileID: 11400000, guid: daa0c1834c1c9344a985a099d7a9940c, type: 2}
   eventRewardData: {fileID: 11400000, guid: 236599fc25a879746a4f4e9bb40836db, type: 2}

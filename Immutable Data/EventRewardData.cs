@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using NamPhuThuy.Common;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -44,7 +43,7 @@ namespace NamPhuThuy.DataManage
 
             if (duplicates.Count > 0)
             {
-                DebugLogger.LogError(message: $"[EventRewardData] Duplicate EventRewardTypes found: {string.Join(", ", duplicates)}", context: this);
+                Debug.LogError(message: $"[EventRewardData] Duplicate EventRewardTypes found: {string.Join(", ", duplicates)}", context: this);
             }
 
             // Clear the cached dictionary to force rebuild on next lookup

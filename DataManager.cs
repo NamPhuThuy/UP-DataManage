@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using MoreMountains.Tools;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -75,7 +76,7 @@ JSON for:
         
         #region MonoBehaviour Callbacks
 
-        protected void Awake()
+        protected async void Awake()
         {
             if (_instance == null)
             {
@@ -88,6 +89,9 @@ JSON for:
                 Debug.LogWarning($"[Singleton] Duplicate instance of {typeof(DataManager)} detected. Destroying.");
                 Destroy(gameObject);
             }
+            
+            
+            TryLoadAlbumData();
         }
 
         public void OnDestroy()

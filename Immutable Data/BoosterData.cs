@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 #if UNITY_EDITOR
-using NamPhuThuy.Common;
 using UnityEditor;
 #endif
 
@@ -47,7 +46,7 @@ namespace NamPhuThuy.DataManage
 
             if (duplicates.Count > 0)
             {
-                DebugLogger.LogError(message:$"[BoosterData] Duplicate BoosterTypes found: {string.Join(", ", duplicates)}", context: this);
+                Debug.LogError(message:$"[BoosterData] Duplicate BoosterTypes found: {string.Join(", ", duplicates)}", context: this);
             }
 
             // Clear the cached dictionary to force rebuild on next lookup
