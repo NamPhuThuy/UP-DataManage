@@ -91,7 +91,7 @@ JSON for:
             }
             
             
-            TryLoadAlbumData();
+            _ = LoadAlbumDataAsync();
         }
 
         public void OnDestroy()

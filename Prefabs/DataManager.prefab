@@ -45,10 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14862124ddedc445972a184b0e2954a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSetData: {fileID: 11400000, guid: e8366e4e5cd56524fba0dcad753b7631, type: 2}
   currentTileSetRecord: {fileID: 11400000, guid: cea6410b2d8f5594dbe6697a25dd9eda,
     type: 2}
-  albumData: {fileID: 11400000, guid: 2c1c96131a29aee4fb53a493113ab901, type: 2}
+  albumData: {fileID: 11400000, guid: 7a11640a5bf7e0e4e8688ef74b693e3c, type: 2}
+  albumDataAR:
+    m_AssetGUID: 2c1c96131a29aee4fb53a493113ab901
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 1
+  isLoadingAlbumData: 0
   albumRewardData: {fileID: 11400000, guid: 5aa0c2e9f8280934abcb253b53503ff1, type: 2}
   galleryPackData: {fileID: 11400000, guid: b1ff16ac45fd8f644a9c5414b53f265a, type: 2}
   iapData_VIP: {fileID: 11400000, guid: ecafb1070b75708438a689fe254642ed, type: 2}
