@@ -31,6 +31,7 @@ JSON for:
 
         public bool IsCheatMode => isCheatMode;
         public bool isGrantRewardsAfterLevel;
+        public int directPlayLevel = 4;
 
         #region Private Fields
 
