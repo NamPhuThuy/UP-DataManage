@@ -18,10 +18,10 @@ namespace NamPhuThuy.DataManage
         
         // GALLERY
         public const int DEFAULT_ALBUM_ID = 0;
-        public const int DEFAULT_GALLERY_MILESTONE = 10;
+        public const int DEFAULT_GALLERY_MILESTONE = 4;
         
         // GamePlay
-        public const int COIN_REWARD_LEVEL_MILESTONE = 5; // 
+        public const int DEFAULT_LEVEL_REWARD_MILESTONE = 5; // 
         public const string DEFAULT_TILE_SET_NAME = "TileSetRecord - MINIMAL";
         public const string TILE_SET_NAME_MINIMAL = "TileSetRecord - MINIMAL";
         public const string TILE_SET_NAME_MINIMAL_02 = "TileSetRecord - MINIMAL_02";
