@@ -12,8 +12,6 @@ namespace NamPhuThuy.DataManage
 
         [Header("Components")]
         [SerializeField] private LevelDataLoader levelDataLoader;
-        [SerializeField] private TMP_FontAsset defaultFont;
-        public TMP_FontAsset DefaultFont => defaultFont;
 
         #endregion
         
