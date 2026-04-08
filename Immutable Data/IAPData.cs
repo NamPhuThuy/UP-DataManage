@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Purchasing;
 using UnityEngine.Serialization;
+
 #if UNITY_EDITOR
 using UnityEditor;
+#endif
+
+#if USE_UNITY_IAP
+using UnityEngine.Purchasing;
 #endif
 
 namespace NamPhuThuy.DataManage
