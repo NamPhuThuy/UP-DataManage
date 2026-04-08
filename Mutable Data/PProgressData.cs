@@ -7,6 +7,8 @@ namespace NamPhuThuy.DataManage
     [Serializable]
     public class PProgressData 
     {
+        #region Player progress
+
         [SerializeField] private int levelId;
         public int LevelId
         {
@@ -15,7 +17,6 @@ namespace NamPhuThuy.DataManage
             {
                 levelId = value;
                 levelId = Math.Max(0, value);
-                // Debug.Log(message:$"levelId: {levelId}");
                 DataManager.Ins.MarkDirty();
             }
         }
@@ -25,7 +26,7 @@ namespace NamPhuThuy.DataManage
             Debug.Log(message:$"PProgressData.IncreaseCurrentLevel()");
             LevelId++;
         }
-
+        
         [SerializeField] private bool isFirstTimePlay = true;
 
         public bool IsFirstTimePlay
@@ -38,35 +39,7 @@ namespace NamPhuThuy.DataManage
             }
         }
         
-        [SerializeField] private bool isVIP;
-        public bool IsVIP
-        {
-            get => isVIP;
-            set
-            {
-                isVIP = value;
-                DataManager.Ins.MarkDirty();
-            }
-        }
-
-        [SerializeField] private bool isAdsRemoved;
-        public bool IsAdsRemoved 
-        {
-            get => isAdsRemoved;
-            set
-            {
-                isAdsRemoved = value;
-                DataManager.Ins.MarkDirty();
-            }
-        }
-        
-        public void RemoveAds()
-        {
-            IsAdsRemoved = true;
-        }
-
         [SerializeField] private int currentBackgroundId;
-
         public int CurrentBackgroundId
         {
             get
@@ -78,11 +51,9 @@ namespace NamPhuThuy.DataManage
                 currentBackgroundId = value;
                 DataManager.Ins.MarkDirty();
             }
-            
         }
         
         [SerializeField] private int currentFavoriteStyleId;
-
         public int CurrentFavoriteStyleId
         {
             get
@@ -112,17 +83,39 @@ namespace NamPhuThuy.DataManage
                 DataManager.Ins.MarkDirty();
             }
         }
+        #endregion
 
-        [SerializeField] private string tileSetName = DataConst.DEFAULT_TILE_SET_NAME;
-        public string TileSetName
+        #region Services related
+
+        [SerializeField] private bool isVIP;
+        public bool IsVIP
         {
-            get => tileSetName;
+            get => isVIP;
             set
             {
-                tileSetName = value;
-                DataManager.Ins.UpdateTileRecord();
+                isVIP = value;
                 DataManager.Ins.MarkDirty();
             }
         }
+
+        [SerializeField] private bool isAdsRemoved;
+        public bool IsAdsRemoved 
+        {
+            get => isAdsRemoved;
+            set
+            {
+                isAdsRemoved = value;
+                DataManager.Ins.MarkDirty();
+            }
+        }
+        
+        public void RemoveAds()
+        {
+            IsAdsRemoved = true;
+        }
+
+        #endregion
+       
+        [SerializeField] private string tileSetName = DataConst.DEFAULT_TILE_SET_NAME;
     }
 }

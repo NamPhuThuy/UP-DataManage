@@ -8,7 +8,7 @@ using UnityEditor;
 
 namespace NamPhuThuy.DataManage
 {
-    [CreateAssetMenu(fileName = "IAPData", menuName = "Game/IAPData", order = 1)]
+    [CreateAssetMenu(fileName = "IAPData", menuName = "NamPhuThuy_DataManage/IAPData", order = 1)]
     public class IAPData : ScriptableObject
     {
         [Header("IAP Data")]
@@ -83,7 +83,11 @@ namespace NamPhuThuy.DataManage
         [SerializeField] private string bundleName;
         [SerializeField] private string bundleId;
         [SerializeField] private IAPType iapType;
+
+#if USE_UNITY_IAP
         [SerializeField] private ProductType productType = ProductType.Consumable;
+#endif
+        
         [SerializeField] private Sprite titleImage;
         [SerializeField] private Sprite backgroundSprite;
         [SerializeField] private Sprite subTitleImage;
@@ -95,7 +99,9 @@ namespace NamPhuThuy.DataManage
         public string BundleName => bundleName;
         public string BundleId => bundleId;
         public IAPType Type => iapType;
+#if USE_UNITY_IAP
         public ProductType ProductType => productType;
+#endif
         public Sprite TitleImage => titleImage;
 
         public Sprite BackgroundSprite => backgroundSprite;

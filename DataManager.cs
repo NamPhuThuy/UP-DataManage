@@ -36,7 +36,6 @@ JSON for:
         private Coroutine _saveDebounce;
 
         private static DataManager _instance;
-        private static readonly object _lock = new object();
         private static bool _isQuitting = false;
 
         public static DataManager Ins
@@ -50,23 +49,18 @@ JSON for:
                     return null;
                 }
 
-                /*lock (_lock)
-                {*/
                 if (_instance == null)
                 {
-                    // Try to find existing instance in scene
                     _instance = FindFirstObjectByType<DataManager>();
 
                     if (_instance == null)
                     {
-                        // Create new GameObject with the singleton component
                         GameObject singletonObj = new GameObject($"{typeof(DataManager).Name} (Singleton)");
                         _instance = singletonObj.AddComponent<DataManager>();
 
                         Debug.Log($"[Singleton] Created new instance of {typeof(DataManager)}");
                     }
                 }
-                //}
 
                 return _instance;
             }
@@ -91,7 +85,7 @@ JSON for:
             }
 
 
-            _ = LoadAlbumDataAsync();
+            // _ = LoadAlbumDataAsync();
         }
 
         public void OnDestroy()
@@ -115,25 +109,17 @@ JSON for:
 
         private void Start()
         {
-            // DebugLogger.Log();
-            // yield return null;
-
             _playerDataPath = $"{Application.persistentDataPath}/player.{DataConst.FILES_EXTENSION}";
             _settingsDataPath = $"{Application.persistentDataPath}/settings.{DataConst.FILES_EXTENSION}";
             _progressDataPath = $"{Application.persistentDataPath}/progress.{DataConst.FILES_EXTENSION}";
             _inventoryDataPath = $"{Application.persistentDataPath}/inventory.{DataConst.FILES_EXTENSION}";
-            _albumDataPath = $"{Application.persistentDataPath}/album.{DataConst.FILES_EXTENSION}";
+            // _albumDataPath = $"{Application.persistentDataPath}/album.{DataConst.FILES_EXTENSION}";
 
-            // yield return StartCoroutine(LoadData());
             LoadData();
-            /*if (isUseRemoteConfig)
-            {
-                yield return StartCoroutine(levelDataLoader.LoadDataFromJson());
-            }*/
         }
 
 
-        // [FIX 5.1] Save on pause — OS can kill backgrounded apps without calling OnApplicationQuit
+        // Save on pause - OS can kill backgrounded apps without calling OnApplicationQuit
         private void OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus) SaveData();
@@ -228,9 +214,9 @@ JSON for:
 
         public void SavePAlbumData()
         {
-            _albumDataPath = $"{Application.persistentDataPath}/album.{DataConst.FILES_EXTENSION}";
+            /*_albumDataPath = $"{Application.persistentDataPath}/album.{DataConst.FILES_EXTENSION}";
             string origin = JsonUtility.ToJson(cachedPAlbumData);
-            SafeWriteJson(_albumDataPath, origin);
+            SafeWriteJson(_albumDataPath, origin);*/
         }
 
         #endregion
@@ -238,7 +224,7 @@ JSON for:
         #region Load Methods
 
         /// <summary>
-        /// Companion to SafeWriteJson — recovers from interrupted writes.
+        /// Companion to SafeWriteJson - recovers from interrupted writes.
         /// Checks for leftover .bak and .tmp files from SafeWriteJson and restores valid data.
         ///
         /// Recovery scenarios:
@@ -269,7 +255,7 @@ JSON for:
                 return File.ReadAllText(path);
             }
 
-            // Main file is missing — try to recover
+            // Main file is missing - try to recover
             // If .bak exists, SafeWriteJson completed step 2 (rename .json → .bak) but not step 3
             if (File.Exists(bakPath))
             {
@@ -288,7 +274,7 @@ JSON for:
                 return File.ReadAllText(path);
             }
 
-            // Nothing exists — first launch
+            // Nothing exists - first launch
             return null;
         }
 
@@ -359,7 +345,7 @@ JSON for:
 
         private void LoadPAlbumData()
         {
-            _albumDataPath = $"{Application.persistentDataPath}/album.{DataConst.FILES_EXTENSION}";
+            /*_albumDataPath = $"{Application.persistentDataPath}/album.{DataConst.FILES_EXTENSION}";
             try
             {
                 string data = SafeReadJson(_albumDataPath);
@@ -372,7 +358,7 @@ JSON for:
             {
                 Debug.LogWarning($"DataManager.LoadPAlbumData() failed: {e.Message}");
                 ResetPAlbumData();
-            }
+            }*/
         }
 
         #endregion
@@ -400,7 +386,7 @@ JSON for:
 
         public void ResetPAlbumData()
         {
-            cachedPAlbumData = new PAlbumData();
+            // cachedPAlbumData = new PAlbumData();
             SavePAlbumData();
         }
 

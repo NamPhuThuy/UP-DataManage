@@ -1,12 +1,19 @@
 # Instruction
 
+Available for Unity 6000.3.9f1
+
 The package should be placed like this:
 <pre>
 _Project/
-├── Data Module/
+├── Module Data/
 │   ├── Extend/
-│   └── UPack-Data-Management-Template/
+│   └── UPack-DataManage/
 </pre>
 
 
-Should be install with the package: https://github.com/NamPhuThuy/UPack-Common
+# Dependencies
+- https://github.com/NamPhuThuy/UPack-Common
+- Unity package: In-App Purchasing (or delete the IAP-Data part)
+
+# Note
+- If MMEvent is being used, ensure added the scripting symbol "USE_MOREMOUNTAIN_EVENT"
