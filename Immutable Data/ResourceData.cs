@@ -117,7 +117,9 @@ namespace NamPhuThuy.DataManage
         HEART = 3,
         NO_ADS = 5,
         TIME = 6,
-        VIP = 7
+        VIP = 7,
+        HP = 8,
+        SOUL = 9,
     }
     
 }
